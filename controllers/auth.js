@@ -82,9 +82,12 @@ const loginUsuario = async (req = request, res = response) => {
 };
 
 const revalidarToken = (req = request, res = response) => {
+  const { uid, name } = req;
+
   return res.json({
     ok: true,
-    msg: "Renew",
+    uid,
+    name,
   });
 };
 
