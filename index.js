@@ -1,9 +1,12 @@
 const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
 //Crear el servidor express
 const app = express();
-const cors = require("cors");
-require("dotenv").config();
+
+//Directorio público
+app.use(express.static("public"));
 
 //CORS
 app.use(cors());
@@ -12,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 //Rutas
+
 app.use("/api/auth", require("./routes/auth"));
 
 //Levantar servidor express
