@@ -34,6 +34,7 @@ const crearUsuario = async (req = request, res = response) => {
       uid: dbUser.id,
       name,
       token,
+      email,
     });
   } catch (error) {
     console.log(error);
@@ -71,6 +72,7 @@ const loginUsuario = async (req = request, res = response) => {
       uid: dbUser.id,
       name: dbUser.name,
       token,
+      email: dbUser.email,
     });
   } catch (error) {
     console.log(error);
@@ -82,13 +84,18 @@ const loginUsuario = async (req = request, res = response) => {
 };
 
 const revalidarToken = async (req = request, res = response) => {
-  const { uid, name } = req;
-  const token = await generarJWT(uid, name);
+  const { uid } = req;
+
+  //Leer la base de datos
+  const dbUser = await Usuario.findById(uid);
+
+  const token = await generarJWT(uid, dbUser.name);
   return res.json({
     ok: true,
     uid,
-    name,
+    name: dbUser.name,
     token,
+    email: dbUser.email,
   });
 };
 
